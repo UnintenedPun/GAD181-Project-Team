@@ -53,7 +53,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                if(gameOver)
+                if(!wonGame)
                 {
                     EndGame();
                 }
