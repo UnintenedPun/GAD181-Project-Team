@@ -17,9 +17,12 @@ public class GameController : MonoBehaviour
     public HurdleSpawner spawner;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timerText;
+
     [Header("Player")]
     public bool gameRunning = false;
     public bool stopScrolling = false;
+    public bool gameOver = false;
+    public bool wonGame = false;
     public float ScrollSpeed = -1.5f;
 
     [Header("Time")]
@@ -50,14 +53,19 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                EndGame();
+                if(gameOver)
+                {
+                    EndGame();
+                }
             }
         }
     }
 
     public void GameOver()
     {
+        gameOver = true;
         playerControls.enableControls = false;
+        playerControls.animator.SetBool("GameStart", false);
         gameRunning = false;
         stopScrolling = true;
         spawner.gameRunning = false;
@@ -69,6 +77,7 @@ public class GameController : MonoBehaviour
     {
         spawner.IntHurdles();
         playerControls.enableControls = true;
+        playerControls.animator.SetBool("GameStart", true);
         gameRunning = true;
         stopScrolling = false;
         spawner.gameRunning = true;
@@ -80,7 +89,9 @@ public class GameController : MonoBehaviour
 
     public void EndGame()
     {
+        wonGame = true;
         playerControls.enableControls = false;
+        playerControls.animator.SetBool("GameStart", false);
         stopScrolling = true;
         gameRunning = false;
         spawner.gameRunning = false;

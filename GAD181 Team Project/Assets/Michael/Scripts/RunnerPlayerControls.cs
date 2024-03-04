@@ -9,6 +9,7 @@ public class RunnerPlayerControls : MonoBehaviour
     private GameController controller;
 
     [Header("Public Variables")]
+    public Animator animator;
     public float jumpForce;
     public LayerMask ground;
     public bool enableControls = false;
@@ -29,8 +30,10 @@ public class RunnerPlayerControls : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     rb.velocity = new Vector2(0, jumpForce);
+                    
                     Debug.Log("Jump");
                 }
+                animator.SetFloat("JumpVelocity", rb.velocity.y);
             }
         }
     }
