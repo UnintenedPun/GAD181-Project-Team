@@ -33,14 +33,6 @@ public class GameController : MonoBehaviour
 
     public void Start()
     {
-        if(instance == null)
-        {
-            instance = this;
-        }
-        else if(instance != this)
-        {
-            Destroy(gameObject);
-        }
         Score = 0;
         timeInGame = 0f;
         TimeRemaining = startingTime;
@@ -76,11 +68,14 @@ public class GameController : MonoBehaviour
     public void StartGame()
     {
         spawner.IntHurdles();
+        playerControls.enableControls = true;
         gameRunning = true;
         stopScrolling = false;
         spawner.gameRunning = true;
         StartGameScreen.SetActive(false);
         GameView.SetActive(true);
+        
+        StartScrolling();
     }
 
     public void EndGame()
@@ -102,5 +97,23 @@ public class GameController : MonoBehaviour
         Score += score;
         scoreText.text = Score.ToString();
 
+    }
+
+    public void StartScrolling()
+    {
+        scrollingObject[] scroll = new scrollingObject[5];
+        for(int i = 0; i < 5; i++)
+        {
+            scrollingObject obj = FindObjectOfType<scrollingObject>();
+            if(obj != null)
+            {
+                scroll[i] = obj;
+                scroll[i].StartScroll();
+            }
+            else
+            {
+                Debug.Log("no obj in scene");
+            }
+        }
     }
 }
