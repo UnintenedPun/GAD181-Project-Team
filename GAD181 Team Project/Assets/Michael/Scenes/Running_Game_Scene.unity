@@ -794,6 +794,8 @@ MonoBehaviour:
   timerText: {fileID: 1213186022}
   gameRunning: 0
   stopScrolling: 0
+  gameOver: 0
+  wonGame: 0
   ScrollSpeed: -3
   timeInGame: 0
   TimeRemaining: 0
@@ -3492,7 +3494,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 793c8f17452a9e3489c14cab010b8c7c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9135468d99e6c0a4db73f583daba672a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3564,8 +3566,8 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0.22734275, y: -1.7487931}
   m_SpriteTilingProperty:
-    border: {x: 16.532166, y: 0, z: 0, w: 0}
-    pivot: {x: 0.82, y: 0.47}
+    border: {x: 13.341747, y: 0, z: 0, w: 0}
+    pivot: {x: 0.73, y: 0.5}
     oldSize: {x: 23.603092, y: 16.4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -4211,9 +4213,9 @@ GameObject:
   - component: {fileID: 2018446448}
   - component: {fileID: 2018446449}
   - component: {fileID: 2018446450}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -7,6 +7,7 @@ public class RunnerPlayerControls : MonoBehaviour
     [Header("Private Variables")]
     private Rigidbody2D rb;
     private GameController controller;
+    private Collider2D col;
 
     [Header("Public Variables")]
     public Animator animator;
@@ -18,6 +19,7 @@ public class RunnerPlayerControls : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         controller = FindAnyObjectByType<GameController>();
+        col = GetComponent<Collider2D>();
     }
 
 
@@ -27,7 +29,7 @@ public class RunnerPlayerControls : MonoBehaviour
         {
             if (rb != null)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space) && col.IsTouchingLayers(ground))
                 {
                     rb.velocity = new Vector2(0, jumpForce);
                     
@@ -43,7 +45,8 @@ public class RunnerPlayerControls : MonoBehaviour
     {
         if(collision.CompareTag("Hurdle"))
         {
-            controller.GameOver();
+            animator.SetTrigger("Damaged");
+            
         }
     }
 }
