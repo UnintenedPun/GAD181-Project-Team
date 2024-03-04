@@ -662,7 +662,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Can you make it to the end?
 
-    You Have 10 seconds! Run!'
+    You Have 30 seconds! Run!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: f629c6e43dba4bf38cb74d8860150664, type: 2}
@@ -799,7 +799,7 @@ MonoBehaviour:
   ScrollSpeed: -3
   timeInGame: 0
   TimeRemaining: 0
-  startingTime: 10
+  startingTime: 30
   Score: 0
 --- !u!1 &431566188
 GameObject:
@@ -3589,6 +3589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80cd9ace2d8dc0445b6dd514d39f6a34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 3
   animator: {fileID: 1707110020}
   jumpForce: 15
   ground:
@@ -4229,8 +4230,8 @@ Transform:
   m_GameObject: {fileID: 2018446445}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.27, y: -5.6065, z: 1}
-  m_LocalScale: {x: 72.51155, y: 1.573, z: 1}
+  m_LocalPosition: {x: 74.2087, y: -5.6065, z: 1}
+  m_LocalScale: {x: 172.38896, y: 1.573, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1730270292}

@@ -8,8 +8,11 @@ public class RunnerPlayerControls : MonoBehaviour
     private Rigidbody2D rb;
     private GameController controller;
     private Collider2D col;
+    private int currentHealth;
+    private bool waitTime = false;
 
     [Header("Public Variables")]
+    public int health;
     public Animator animator;
     public float jumpForce;
     public LayerMask ground;
@@ -17,6 +20,7 @@ public class RunnerPlayerControls : MonoBehaviour
 
     public void Start()
     {
+        currentHealth = health;
         rb = GetComponent<Rigidbody2D>();
         controller = FindAnyObjectByType<GameController>();
         col = GetComponent<Collider2D>();
@@ -46,7 +50,31 @@ public class RunnerPlayerControls : MonoBehaviour
         if(collision.CompareTag("Hurdle"))
         {
             animator.SetTrigger("Damaged");
-            
+            if(!waitTime)
+            StartCoroutine(Damaged());
         }
+    }
+
+    private void AddHealth(int amount)
+    {
+        if(currentHealth <= health && currentHealth > 0)
+        {
+            currentHealth += amount;
+            Debug.Log("health at" + currentHealth);
+        }
+        else
+        {
+            controller.GameOver();
+        }
+    }
+
+    private IEnumerator Damaged()
+    {
+        waitTime = true;
+        controller.ScrollSpeed = -1f;
+        yield return new WaitForSeconds(1.5f);
+        controller.ScrollSpeed = -3f;
+        AddHealth(-1);
+        waitTime = false;
     }
 }
