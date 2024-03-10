@@ -49,7 +49,6 @@ public class RunnerPlayerControls : MonoBehaviour
     {
         if(collision.CompareTag("Hurdle"))
         {
-            animator.SetTrigger("Damaged");
             if(!waitTime)
             StartCoroutine(Damaged());
         }
@@ -72,6 +71,7 @@ public class RunnerPlayerControls : MonoBehaviour
     {
         waitTime = true;
         controller.ScrollSpeed = -1f;
+        animator.SetTrigger("Damaged");
         yield return new WaitForSeconds(1.5f);
         controller.ScrollSpeed = -3f;
         AddHealth(-1);
