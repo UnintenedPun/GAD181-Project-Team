@@ -34,7 +34,6 @@ public class HurdleSpawner : MonoBehaviour
                 timeSinceLastSpawn = 0;
                 if (Hurdles[currentHurdle] == null)
                 {
-                    MoveHurdle();
                     SpawnHurdle(1);
                     if (currentHurdle >= HurdlePoolSize)
                     {
@@ -43,7 +42,6 @@ public class HurdleSpawner : MonoBehaviour
                     return;
                 }
                 MoveHurdle();
-                SpawnHurdle(1);
 
                 if (currentHurdle >= HurdlePoolSize)
                 {
@@ -59,6 +57,7 @@ public class HurdleSpawner : MonoBehaviour
         {
             Hurdles[i] = (GameObject)Instantiate(HurdlePrefab[Random.Range(0, HurdlePoolSize)], spawnpoint.transform.position, Quaternion.identity);
         }
+        MoveHurdle();
     }
 
     private void MoveHurdle()

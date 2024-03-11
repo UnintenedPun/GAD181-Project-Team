@@ -2020,7 +2020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed502cc96b77c14b95b0932ba415538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HurdlePoolSize: 3
+  HurdlePoolSize: 4
   HurdlePrefab:
   - {fileID: 5381682379274372352, guid: 6b4460906e3e1d34884b83d1cc0212d6, type: 3}
   - {fileID: 5381682379274372352, guid: 0f2beeca7c308ea40b4f8f42c4d62afd, type: 3}
