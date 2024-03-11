@@ -2020,16 +2020,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed502cc96b77c14b95b0932ba415538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HurdlePoolSize: 7
+  HurdlePoolSize: 3
   HurdlePrefab:
-  - {fileID: 6384489255426279338, guid: 1a7d6da6b66c27b4982aebfa3fc5177a, type: 3}
+  - {fileID: 5381682379274372352, guid: 6b4460906e3e1d34884b83d1cc0212d6, type: 3}
+  - {fileID: 5381682379274372352, guid: 0f2beeca7c308ea40b4f8f42c4d62afd, type: 3}
   - {fileID: 5381682379274372352, guid: 68aff35bf9091da49b196297fe26052d, type: 3}
-  - {fileID: 6384489255426279338, guid: 1a7d6da6b66c27b4982aebfa3fc5177a, type: 3}
-  - {fileID: 6384489255426279338, guid: 1a7d6da6b66c27b4982aebfa3fc5177a, type: 3}
-  - {fileID: 5381682379274372352, guid: 68aff35bf9091da49b196297fe26052d, type: 3}
-  - {fileID: 5381682379274372352, guid: 68aff35bf9091da49b196297fe26052d, type: 3}
-  - {fileID: 5381682379274372352, guid: 68aff35bf9091da49b196297fe26052d, type: 3}
-  - {fileID: 6384489255426279338, guid: 1a7d6da6b66c27b4982aebfa3fc5177a, type: 3}
+  - {fileID: 5381682379274372352, guid: 6b4460906e3e1d34884b83d1cc0212d6, type: 3}
   spawnpoint: {fileID: 1326220267}
   spawnRate: 3
   gameRunning: 0

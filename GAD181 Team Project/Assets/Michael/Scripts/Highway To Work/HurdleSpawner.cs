@@ -35,6 +35,7 @@ public class HurdleSpawner : MonoBehaviour
                 if (Hurdles[currentHurdle] == null)
                 {
                     MoveHurdle();
+                    SpawnHurdle(1);
                     if (currentHurdle >= HurdlePoolSize)
                     {
                         currentHurdle = 0;
@@ -42,6 +43,7 @@ public class HurdleSpawner : MonoBehaviour
                     return;
                 }
                 MoveHurdle();
+                SpawnHurdle(1);
 
                 if (currentHurdle >= HurdlePoolSize)
                 {
@@ -61,10 +63,10 @@ public class HurdleSpawner : MonoBehaviour
 
     private void MoveHurdle()
     {
-        if (Hurdles[currentHurdle] != null)
-        {
+        
+        
             Hurdles[currentHurdle].transform.position = spawnpoint.transform.position;
             currentHurdle++;
-        }
+        
     }
 }
