@@ -4,16 +4,24 @@ using UnityEngine;
 
 public class HurdleSpawner : MonoBehaviour
 {
-    public int HurdlePoolSize = 3;
+    public int HurdlePoolSize;
     public GameObject[] HurdlePrefab;
     public GameObject spawnpoint;
-    public float spawnRate = 4f;
+    public float spawnRate;
 
     private GameObject[] Hurdles;
     private float timeSinceLastSpawn;
+    private int HurdlesInGame;
     private int currentHurdle = 0;
 
     public bool gameRunning;
+
+    public void Start()
+    {
+        Hurdles = new GameObject[HurdlePoolSize];
+        SpawnHurdle(1);
+    }
+
 
     public void Update()
     {
@@ -24,24 +32,38 @@ public class HurdleSpawner : MonoBehaviour
             if (timeSinceLastSpawn >= spawnRate)
             {
                 timeSinceLastSpawn = 0;
-                Hurdles[currentHurdle].transform.position = spawnpoint.transform.position;
-                currentHurdle++;
+                if (Hurdles[currentHurdle] == null)
+                {
+                    SpawnHurdle(1);
+
+                    MoveHurdle();
+                    if (currentHurdle >= HurdlePoolSize)
+                    {
+                        currentHurdle = 0;
+                    }
+                    return;
+                }
+                MoveHurdle();
 
                 if (currentHurdle >= HurdlePoolSize)
                 {
                     currentHurdle = 0;
                 }
-
             }
         }
     }
 
-    public void IntHurdles()
+    public void SpawnHurdle(int num)
     {
-        Hurdles = new GameObject[HurdlePoolSize];
-        for (int i = 0; i < HurdlePoolSize; ++i)
+        for (int i = 0; i < num; i++)
         {
             Hurdles[i] = (GameObject)Instantiate(HurdlePrefab[Random.Range(0, HurdlePoolSize)], spawnpoint.transform.position, Quaternion.identity);
         }
+    }
+
+    private void MoveHurdle()
+    {
+        Hurdles[currentHurdle].transform.position = spawnpoint.transform.position;
+        currentHurdle++;
     }
 }

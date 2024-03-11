@@ -75,7 +75,7 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
-        spawner.IntHurdles();
+        //spawner.IntHurdles();
         playerControls.enableControls = true;
         playerControls.animator.SetBool("GameStart", true);
         gameRunning = true;
