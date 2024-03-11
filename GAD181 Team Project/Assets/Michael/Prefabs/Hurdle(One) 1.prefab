@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 3042983694661240879}
   - component: {fileID: 2370916960586912501}
   m_Layer: 6
-  m_Name: Hurdle(One)
+  m_Name: Hurdle(One) 1
   m_TagString: Hurdle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
