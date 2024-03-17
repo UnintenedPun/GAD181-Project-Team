@@ -62,10 +62,11 @@ public class HurdleSpawner : MonoBehaviour
 
     private void MoveHurdle()
     {
-        
-        
+        if(Hurdles[currentHurdle] != null)
+        {
             Hurdles[currentHurdle].transform.position = spawnpoint.transform.position;
             currentHurdle++;
-        
+        }
+            
     }
 }

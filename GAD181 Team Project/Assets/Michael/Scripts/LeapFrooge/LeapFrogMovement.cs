@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class LeapFrogMovement : MonoBehaviour
 {
@@ -10,12 +11,17 @@ public class LeapFrogMovement : MonoBehaviour
 
     [Header("References")]
     private Rigidbody2D rb2d;
+    private Transform myPos;
+    private LeapFroogManager controller;
 
+    public Tilemap deadZone;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        myPos = GetComponent<Transform>();
+        controller = FindFirstObjectByType<LeapFroogManager>();
         rb2d = GetComponent<Rigidbody2D>();
         Yaxis = new Vector2 (0, 1);
         Xaxis = new Vector2 (1, 0);
@@ -25,17 +31,57 @@ public class LeapFrogMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
+        if(controller.gameRunning)
         {
-            rb2d.MovePosition(rb2d.position - Xaxis);
+            CheckPos();
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                MoveLeft();
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                MoveRight();
+            }
+            else if (Input.GetKeyDown(KeyCode.W))
+            {
+                MoveUp();
+            }
         }
-        else if(Input.GetKeyDown(KeyCode.D))
+        
+    }
+
+
+    #region Funtions
+
+    private void MoveLeft()
+    {
+        rb2d.MovePosition(rb2d.position - Xaxis);
+    }
+
+    private void MoveRight()
+    {
+        rb2d.MovePosition(rb2d.position + Xaxis);
+    }
+
+    private void MoveUp()
+    {
+        rb2d.MovePosition(rb2d.position + Yaxis);
+    }
+
+    private void CheckPos()
+    {
+        Vector3Int pos = deadZone.LocalToCell(myPos.position);
+        TileBase location = deadZone.GetTile(pos);
+        Debug.Log(location);
+        if (location != null)
         {
-            rb2d.MovePosition(rb2d.position + Xaxis);
+            controller.LoseCondition();
         }
-        else if(Input.GetKeyDown(KeyCode.W))
+        else
         {
-            rb2d.MovePosition(rb2d.position + Yaxis);
+            return;
         }
     }
+
+    #endregion
 }

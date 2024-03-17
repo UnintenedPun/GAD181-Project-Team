@@ -10,6 +10,9 @@ public class LeapFroogManager : MonoBehaviour
     public GameObject WonGameUI;
     public GameObject InGameUI;
 
+    [Header("Variablies")]
+    public bool gameRunning = false;
+
 
     #region Functions
     /// <summary>
@@ -17,6 +20,7 @@ public class LeapFroogManager : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
+        gameRunning = true;
         StartGameUI.SetActive(false);
         InGameUI.SetActive(true);
     }
@@ -26,6 +30,7 @@ public class LeapFroogManager : MonoBehaviour
     /// </summary>
     public void WinCondition()
     {
+        gameRunning = false;
         InGameUI.SetActive(false);
         WonGameUI.SetActive(true);
     }
@@ -35,6 +40,7 @@ public class LeapFroogManager : MonoBehaviour
     /// </summary>
     public void LoseCondition() 
     {
+        gameRunning = false;
         InGameUI.SetActive(false);
         GameOverUI.SetActive(true);
     }
