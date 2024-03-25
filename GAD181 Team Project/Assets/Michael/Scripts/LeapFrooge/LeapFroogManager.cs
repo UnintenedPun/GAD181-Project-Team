@@ -12,6 +12,21 @@ public class LeapFroogManager : MonoBehaviour
 
     [Header("Variablies")]
     public bool gameRunning = false;
+    public int gameScore;
+    public float timeBetweenspawns;
+    public GameObject BirdPrefab;
+
+    [Header("private Variables")]
+    private int currentScore;
+    private bool spawningBirdsX = false;
+    private bool spawningBirdsY = false;
+    private BirdController birdController;
+
+    private void Start()
+    {
+        birdController = FindObjectOfType<BirdController>();
+    }
+
 
 
     #region Functions
@@ -23,6 +38,7 @@ public class LeapFroogManager : MonoBehaviour
         gameRunning = true;
         StartGameUI.SetActive(false);
         InGameUI.SetActive(true);
+        StartSpawningBirds();
     }
 
     /// <summary>
@@ -45,6 +61,45 @@ public class LeapFroogManager : MonoBehaviour
         GameOverUI.SetActive(true);
     }
 
+    public void AddScore(int score)
+    {
+        currentScore += score;
+        gameScore = currentScore;
+    }
+
+    private void StartSpawningBirds()
+    {
+        if(!spawningBirdsX)
+        {
+            StartCoroutine(SpawnBirdsX());
+        }
+        
+        if(!spawningBirdsY)
+        {
+            StartCoroutine(SpawnBirdsY());
+        }
+        
+    }
+
+    private IEnumerator SpawnBirdsX()
+    {
+        spawningBirdsX = true;
+        
+       yield return new WaitForSeconds(timeBetweenspawns);
+
+        birdController.SpawnBirdX(BirdPrefab);
+        spawningBirdsX = false;
+    }
+
+    private IEnumerator SpawnBirdsY()
+    {
+        spawningBirdsY = true;
+
+        yield return new WaitForSeconds(timeBetweenspawns);
+
+        birdController.SpawnBirdy(BirdPrefab);
+        spawningBirdsY = false;
+    }
 
     #endregion
 }

@@ -7,13 +7,12 @@ public class KeyScript : MonoBehaviour
 {
     public GameObject doors;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.collider != null && collision.collider.tag == "Player")
+        if (collision != null && collision.tag == "Player")
         {
             PickUp();
         }
-        
     }
 
     private void PickUp()
