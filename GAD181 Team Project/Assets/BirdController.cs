@@ -16,10 +16,9 @@ public class BirdController : MonoBehaviour
             Debug.Log("Spawning birdX");
             int randomvalx = Random.Range(0, Spawnpointsx.Length);
             GameObject bird = Instantiate(birdPrefab, Spawnpointsx[randomvalx].position, Quaternion.identity);
-            Instantiate(bird);
-            script.moveright = true;
-            script.isActive = true;
-
+            BirdScript currentBird = bird.GetComponent<BirdScript>();
+            currentBird.Move = true;
+            currentBird.isActive = true;
         }
     }
 
@@ -32,10 +31,9 @@ public class BirdController : MonoBehaviour
             Debug.Log("Spawning birdY");
             int randomvaly = Random.Range(0, Spawnpointsy.Length);
             GameObject bird = Instantiate(birdPrefab, Spawnpointsy[randomvaly].position, Quaternion.identity);
-            Instantiate(bird);
-            script.moveleft = true;
-            script.isActive = true;
-
+            BirdScript currentBird = bird.GetComponent<BirdScript>();
+            currentBird.Move = true;
+            currentBird.isActive = true;
         }
     }
 }

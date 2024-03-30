@@ -14,13 +14,20 @@ public class LeapFroogManager : MonoBehaviour
     public bool gameRunning = false;
     public int gameScore;
     public float timeBetweenspawns;
-    public GameObject BirdPrefab;
+
+    [Header("Birds")]
+    private bool spawningBirdsX = false;
+    private bool spawningBirdsY = false;
+    public GameObject BirdPrefabLeft;
+    public GameObject BirdPrefabRight;
+    private BirdController birdController;
+    public int maxBirdCount;
 
     [Header("private Variables")]
     private int currentScore;
-    private bool spawningBirdsX = false;
-    private bool spawningBirdsY = false;
-    private BirdController birdController;
+
+
+    [HideInInspector] public int birdCount;
 
     private void Start()
     {
@@ -30,6 +37,7 @@ public class LeapFroogManager : MonoBehaviour
 
 
     #region Functions
+
     /// <summary>
     /// Starts the game and controls the UI and other managers/Player controlss
     /// </summary>
@@ -69,12 +77,12 @@ public class LeapFroogManager : MonoBehaviour
 
     private void StartSpawningBirds()
     {
-        if(!spawningBirdsX)
+        if(!spawningBirdsX && birdCount < maxBirdCount)
         {
             StartCoroutine(SpawnBirdsX());
         }
         
-        if(!spawningBirdsY)
+        if(!spawningBirdsY && birdCount < maxBirdCount)
         {
             StartCoroutine(SpawnBirdsY());
         }
@@ -87,8 +95,10 @@ public class LeapFroogManager : MonoBehaviour
         
        yield return new WaitForSeconds(timeBetweenspawns);
 
-        birdController.SpawnBirdX(BirdPrefab);
+        birdController.SpawnBirdX(BirdPrefabLeft);
+        birdCount++;
         spawningBirdsX = false;
+        StartSpawningBirds();
     }
 
     private IEnumerator SpawnBirdsY()
@@ -97,8 +107,10 @@ public class LeapFroogManager : MonoBehaviour
 
         yield return new WaitForSeconds(timeBetweenspawns);
 
-        birdController.SpawnBirdy(BirdPrefab);
+        birdController.SpawnBirdy(BirdPrefabRight);
+        birdCount++;
         spawningBirdsY = false;
+        StartSpawningBirds();
     }
 
     #endregion

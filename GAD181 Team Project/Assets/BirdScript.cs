@@ -8,6 +8,7 @@ public class BirdScript : MonoBehaviour
     public bool moveright;
     public bool isActive;
     public bool Move;
+    public float speed;
 
     private Vector2 Xaxis;
     private Rigidbody2D rb2d;
@@ -26,11 +27,11 @@ public class BirdScript : MonoBehaviour
         {
             if(moveleft)
             {
-                rb2d.MovePosition(rb2d.position - Xaxis);
+                rb2d.MovePosition(rb2d.position - Xaxis * speed);
             }
             else if(moveright)
             {
-                rb2d.MovePosition(rb2d.position + Xaxis);
+                rb2d.MovePosition(rb2d.position + Xaxis * speed);
             }
             
         }

@@ -15,7 +15,11 @@ public class CoinScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        manager.AddScore(scoreAmount);
-        this.gameObject.SetActive(false);
+        if (collision.tag == "Player")
+        {
+            manager.AddScore(scoreAmount);
+            this.gameObject.SetActive(false);
+        }
+
     }
 }
