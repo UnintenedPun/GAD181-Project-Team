@@ -13,11 +13,19 @@ public class LeapFrogMovement : MonoBehaviour
     private Rigidbody2D rb2d;
     private Transform myPos;
     private LeapFroogManager controller;
+    private bool controllsEnabled = true;
 
+    public int hitTimes = 3;
     public Transform GroundCheck;
     public Tilemap deadZone;
+    public Tilemap background;
+    public Tilemap PlayBarrier;
+    public Tilemap WinCondition;
     public Tilemap walls1;
     public Tilemap walls2;
+
+    public bool isCaptured;
+    public GameObject birdThatHasCapturedMe;
 
 
     // Start is called before the first frame update
@@ -34,9 +42,24 @@ public class LeapFrogMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(controller.gameRunning)
+        if(birdThatHasCapturedMe != null)
+        {
+            myPos.position = birdThatHasCapturedMe.transform.position;
+            if(this.gameObject.GetComponent<Collider2D>().enabled != false)
+            {
+                this.gameObject.GetComponent<Collider2D>().enabled = false;
+            }
+            
+            CheckCurrentPos();
+            return;
+        }
+
+
+        if(controller.gameRunning && controllsEnabled && !isCaptured)
         {
             CheckCurrentPos();
+            CheckPlayBarrier();
+            CheckWinPos();
             if (Input.GetKeyDown(KeyCode.A))
             {
                 MoveLeft();
@@ -84,6 +107,14 @@ public class LeapFrogMovement : MonoBehaviour
         rb2d.MovePosition(rb2d.position - Yaxis);
     }
 
+    public void ResetVelocity()
+    {
+        rb2d.velocity = Vector3.zero;
+        Vector3Int pos = background.LocalToCell(myPos.position);
+
+        myPos.position = background.LocalToCell(pos);
+    }
+
     private void CheckCurrentPos()
     {
         Vector3Int pos = deadZone.LocalToCell(myPos.position);
@@ -97,6 +128,35 @@ public class LeapFrogMovement : MonoBehaviour
             return;
         }
     }
+
+    private void CheckWinPos()
+    {
+        Vector3Int pos = WinCondition.LocalToCell(myPos.position);
+        TileBase location = WinCondition.GetTile(pos);
+        if (location != null)
+        {
+            controller.WinCondition();
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    private void CheckPlayBarrier()
+    {
+        Vector3Int pos = PlayBarrier.LocalToCell(myPos.position);
+        TileBase location = PlayBarrier.GetTile(pos);
+        if (location != null)
+        {
+            controllsEnabled = false;
+        }
+        else
+        {
+            controllsEnabled = true;
+        }
+    }
+
 
     private bool IsWallInFront()
     {
