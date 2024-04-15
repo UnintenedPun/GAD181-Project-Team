@@ -6,10 +6,12 @@ public class CoinScript : MonoBehaviour
 {
     public int scoreAmount;
 
+    private Animator animator;
     private LeapFroogManager manager;
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         manager = FindFirstObjectByType<LeapFroogManager>();
     }
 
@@ -17,9 +19,14 @@ public class CoinScript : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            manager.AddScore(scoreAmount);
-            this.gameObject.SetActive(false);
+            animator.SetTrigger("Pickup");
         }
 
+    }
+
+    public void AddScore()
+    {
+        manager.AddScore(scoreAmount);
+        this.gameObject.SetActive(false);
     }
 }
