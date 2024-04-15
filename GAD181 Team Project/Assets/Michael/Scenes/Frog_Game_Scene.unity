@@ -13334,7 +13334,7 @@ MonoBehaviour:
   timeBetweenspawns: 2.5
   BirdPrefabLeft: {fileID: 6648998274831414538, guid: 731de7c31b756eb4eb4c66cb4c3c62ef, type: 3}
   BirdPrefabRight: {fileID: 6648998274831414538, guid: cf9d3d3fefd913149855fd1baf6ec819, type: 3}
-  maxBirdCount: 1
+  maxBirdCount: 4
   birdCount: 0
 --- !u!1 &1586561110
 GameObject:
