@@ -7,11 +7,18 @@ public class KeyScript : MonoBehaviour
 {
     public GameObject doors;
 
+    private Animator animator;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision != null && collision.tag == "Player")
         {
-            PickUp();
+            animator.SetTrigger("Pickup");
         }
     }
 
