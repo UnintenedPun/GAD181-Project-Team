@@ -14,6 +14,8 @@ public class LeapFrogMovement : MonoBehaviour
     private Transform myPos;
     private LeapFroogManager controller;
     private bool controllsEnabled = true;
+    private Animator myAnimator;
+
 
     public int hitTimes = 3;
     public Transform GroundCheck;
@@ -31,6 +33,7 @@ public class LeapFrogMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        myAnimator = GetComponent<Animator>();
         myPos = GetComponent<Transform>();
         controller = FindFirstObjectByType<LeapFroogManager>();
         rb2d = GetComponent<Rigidbody2D>();
@@ -48,6 +51,7 @@ public class LeapFrogMovement : MonoBehaviour
             if(this.gameObject.GetComponent<Collider2D>().enabled != false)
             {
                 this.gameObject.GetComponent<Collider2D>().enabled = false;
+                myAnimator.SetBool("isCaptured", true);
             }
             
             CheckCurrentPos();
@@ -85,11 +89,13 @@ public class LeapFrogMovement : MonoBehaviour
 
     private void MoveLeft()
     {
+        myAnimator.SetTrigger("IsMoving");
         rb2d.MovePosition(rb2d.position - Xaxis);
     }
 
     private void MoveRight()
     {
+        myAnimator.SetTrigger("IsMoving");
         rb2d.MovePosition(rb2d.position + Xaxis);
     }
 
@@ -99,11 +105,17 @@ public class LeapFrogMovement : MonoBehaviour
         {
             return;
         }
+        myAnimator.SetTrigger("IsMoving");
         rb2d.MovePosition(rb2d.position + Yaxis);
     }
 
     private void MoveDown()
     {
+        if (IsWallInFront() == true)
+        {
+            return;
+        }
+        myAnimator.SetTrigger("IsMoving");
         rb2d.MovePosition(rb2d.position - Yaxis);
     }
 
