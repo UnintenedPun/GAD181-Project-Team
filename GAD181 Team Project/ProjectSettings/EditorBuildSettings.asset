@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Michael/Scenes/Frog_Game_Scene.unity
     guid: 245531733c23d6044a4684e289212dca
+  - enabled: 1
+    path: Assets/Max/Scenes/MainGame.unity
+    guid: c6430c6b63ccb3548965cae421245938
   m_configObjects: {}

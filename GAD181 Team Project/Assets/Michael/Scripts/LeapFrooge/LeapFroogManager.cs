@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LeapFroogManager : MonoBehaviour
@@ -9,6 +10,16 @@ public class LeapFroogManager : MonoBehaviour
     public GameObject GameOverUI;
     public GameObject WonGameUI;
     public GameObject InGameUI;
+    public bool isCredits = false;
+
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI timerText;
+
+    public TextMeshProUGUI gameOverScore;
+    public TextMeshProUGUI gameOverTime;
+
+    public TextMeshProUGUI gameWonScore;
+    public TextMeshProUGUI gameWonTime;
 
     [Header("Variablies")]
     public bool gameRunning = false;
@@ -22,6 +33,7 @@ public class LeapFroogManager : MonoBehaviour
     public GameObject BirdPrefabRight;
     private BirdController birdController;
     public int maxBirdCount;
+    private float time;
 
     [Header("private Variables")]
     private int currentScore;
@@ -32,6 +44,13 @@ public class LeapFroogManager : MonoBehaviour
     private void Start()
     {
         birdController = FindObjectOfType<BirdController>();
+        scoreText.text = "Score: " + currentScore.ToString();
+    }
+
+    private void Update()
+    {
+        time += Time.deltaTime;
+        timerText.text = "Time: " + time.ToString("0.0");
     }
 
 
@@ -57,6 +76,8 @@ public class LeapFroogManager : MonoBehaviour
         gameRunning = false;
         InGameUI.SetActive(false);
         WonGameUI.SetActive(true);
+        gameWonScore.text = "Your Score is - " + currentScore.ToString();
+        gameWonTime.text = "Your Time is - " + time.ToString("0.00");
     }
 
     /// <summary>
@@ -67,12 +88,15 @@ public class LeapFroogManager : MonoBehaviour
         gameRunning = false;
         InGameUI.SetActive(false);
         GameOverUI.SetActive(true);
+        gameOverScore.text = "Your Score was - " + currentScore.ToString();
+        gameOverTime.text = "Your Time was - " + time.ToString("0.00");
     }
 
     public void AddScore(int score)
     {
         currentScore += score;
         gameScore = currentScore;
+        scoreText.text = "Score:" + score.ToString();
     }
 
     private void StartSpawningBirds()

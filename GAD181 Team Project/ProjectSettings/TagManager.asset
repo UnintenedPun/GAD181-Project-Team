@@ -4,17 +4,18 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Floor
-  - Hurdle
-  - Bird
+  - Orb
+  - Junk
+  - Powerup
+  - PlayerUI
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Floor
+  - 
   - Water
   - UI
-  - Hurdle
+  - 
   - 
   - 
   - 
