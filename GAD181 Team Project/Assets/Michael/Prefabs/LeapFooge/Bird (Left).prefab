@@ -52,7 +52,7 @@ MonoBehaviour:
   moveright: 0
   isActive: 0
   Move: 0
-  speed: 0.2
+  speed: 0.15
 --- !u!50 &1516664284463162485
 Rigidbody2D:
   serializedVersion: 4

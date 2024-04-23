@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static UnityEditor.FilePathAttribute;
 
 public class LeapFrogMovement : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class LeapFrogMovement : MonoBehaviour
     private LeapFroogManager controller;
     private bool controllsEnabled = true;
     private Animator myAnimator;
+    private bool wallinFront1 = false;
+    private bool wallinFront2 = false;
 
 
     public int hitTimes = 3;
@@ -45,7 +48,26 @@ public class LeapFrogMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(birdThatHasCapturedMe != null)
+
+        if(IsWallInFront1())
+        {
+            wallinFront1 = true;
+        }
+        else
+        {
+            wallinFront1 = false;
+        }
+
+        if (IsWallInFront2())
+        {
+            wallinFront2 = true;
+        }
+        else
+        {
+            wallinFront2 = false;
+        }
+
+        if (birdThatHasCapturedMe != null)
         {
             myPos.position = birdThatHasCapturedMe.transform.position;
             if(this.gameObject.GetComponent<Collider2D>().enabled != false)
@@ -61,23 +83,25 @@ public class LeapFrogMovement : MonoBehaviour
 
         if(controller.gameRunning && controllsEnabled && !isCaptured)
         {
-            CheckCurrentPos();
-            CheckPlayBarrier();
-            CheckWinPos();
+            
             if (Input.GetKeyDown(KeyCode.A))
             {
+                CheckCondition();
                 MoveLeft();
             }
             else if (Input.GetKeyDown(KeyCode.D))
             {
+                CheckCondition();
                 MoveRight();
             }
             else if (Input.GetKeyDown(KeyCode.W))
             {
+                CheckCondition();
                 MoveUp();
             }
             else if(Input.GetKeyDown(KeyCode.S))
             {
+                CheckCondition();
                 MoveDown();
             }
         }
@@ -86,6 +110,13 @@ public class LeapFrogMovement : MonoBehaviour
 
 
     #region Funtions
+
+    private void CheckCondition()
+    {
+        CheckCurrentPos();
+        CheckPlayBarrier();
+        CheckWinPos();
+    }
 
     private void MoveLeft()
     {
@@ -101,7 +132,12 @@ public class LeapFrogMovement : MonoBehaviour
 
     private void MoveUp()
     {
-        if (IsWallInFront() == true)
+        if (wallinFront1 == true)
+        {
+            return;
+        }
+
+        if (wallinFront2 == true)
         {
             return;
         }
@@ -111,7 +147,12 @@ public class LeapFrogMovement : MonoBehaviour
 
     private void MoveDown()
     {
-        if (IsWallInFront() == true)
+        if (wallinFront1 == true)
+        {
+            return;
+        }
+
+        if (wallinFront2 == true)
         {
             return;
         }
@@ -129,74 +170,71 @@ public class LeapFrogMovement : MonoBehaviour
 
     private void CheckCurrentPos()
     {
-        Vector3Int pos = deadZone.LocalToCell(myPos.position);
-        TileBase location = deadZone.GetTile(pos);
-        if (location != null)
+        if(TileCheck(myPos, deadZone))
         {
             controller.LoseCondition();
-        }
-        else
-        {
-            return;
         }
     }
 
     private void CheckWinPos()
     {
-        Vector3Int pos = WinCondition.LocalToCell(myPos.position);
-        TileBase location = WinCondition.GetTile(pos);
-        if (location != null)
+        if(TileCheck(myPos, WinCondition))
         {
             controller.WinCondition();
         }
-        else
-        {
-            return;
-        }
+ 
     }
 
     private void CheckPlayBarrier()
     {
-        Vector3Int pos = PlayBarrier.LocalToCell(myPos.position);
-        TileBase location = PlayBarrier.GetTile(pos);
-        if (location != null)
+        if(TileCheck(GroundCheck, PlayBarrier))
         {
             controllsEnabled = false;
         }
-        else
+        else if(TileCheck(myPos, PlayBarrier))
         {
-            controllsEnabled = true;
+            controllsEnabled = false;
         }
     }
 
-
-    private bool IsWallInFront()
+    private bool IsWallInFront2()
     {
-        Vector3Int pos1 = walls1.LocalToCell(GroundCheck.position);
-        Vector3Int pos2 = walls2.LocalToCell(GroundCheck.position);
+        Debug.Log("checking walls 2");
+        Debug.Log(TileCheck(GroundCheck, walls2));
+        return TileCheck(GroundCheck, walls2);
+    }
 
-        TileBase location1 = walls1.GetTile(pos1);
-        TileBase location2 = walls2.GetTile(pos2);
+    private bool IsWallInFront1()
+    {
+        Debug.Log("checking walls 1");
+        Debug.Log(TileCheck(GroundCheck, walls1));
+        return TileCheck(GroundCheck, walls1);
+    }
 
-        Debug.Log(location1);
-        Debug.Log(location2);
-        if(walls1.isActiveAndEnabled == false)
+    private bool TileCheck(Transform pos, Tilemap checkMap)
+    {
+        Debug.Log("Checking pos" +  pos + "and Tile Map" + checkMap);
+        Vector3Int newPos = checkMap.LocalToCell(pos.position);
+        TileBase location = checkMap.GetTile(newPos);
+
+        Debug.Log(location);
+
+        if(checkMap.isActiveAndEnabled == false)
         {
-            location1 = null;
+            Debug.Log("nulling");
+            location = null;
         }
-        if(walls2.isActiveAndEnabled == false)
+
+        if (location != null)
         {
-            location2 = null;
-        }
-        if(location1 != null || location2 != null)
-        {
+            Debug.Log("true");
             return true;
         }
         else
-        { 
-            return false; 
+        {
+            Debug.Log("false");
+            return false;
         }
     }
-
     #endregion
 }
