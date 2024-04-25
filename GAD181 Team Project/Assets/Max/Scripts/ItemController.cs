@@ -38,15 +38,20 @@ public class ItemController : MonoBehaviour
         //Set the orbs scale and text size based on orbScale.
         if(gameObject.tag == "Orb")
         {
-            transform.localScale = new Vector3(0.3f + ((float)orbValue * 0.2f), 0.3f + ((float)orbValue * 0.2f), 1);
+            transform.localScale = new Vector3(0.4f + ((float)orbValue * 0.2f), 0.4f + ((float)orbValue * 0.2f), 1);
             referenceOrbText.text = orbValue.ToString();
         }
         
         //Apply the itemScale and itemBounce setting this item if it is a orb and junk item.
         if(gameObject.tag == "Orb" || gameObject.tag == "Junk" || gameObject.tag == "Powerup")
         {
-            transform.localScale = transform.localScale * referenceGameManager.GetComponent<GameManager>().settingItemScale;
-            referenceRigidBody.sharedMaterial.bounciness = referenceGameManager.GetComponent<GameManager>().settingItemBounce;
+            //Get settings
+            float itemScale = referenceGameManager.GetComponent<GameManager>().settingItemScale;
+            float itemBounce = referenceGameManager.GetComponent<GameManager>().settingItemBounce;
+
+            //Apply settings
+            transform.localScale = transform.localScale * (itemScale / 10);
+            referenceRigidBody.sharedMaterial.bounciness = itemBounce / 10;
         }
         
     }
@@ -126,8 +131,22 @@ public class ItemController : MonoBehaviour
                 referenceNewItem.GetComponent<Renderer>().material.SetColor("_Color", GetComponent<Renderer>().material.color);
                 referenceNewItem.GetComponent<SpriteRenderer>().sprite = this.GetComponent<SpriteRenderer>().sprite;
 
-                //Add points to the player based on the merge value.
-                referenceOwnerScript.playerScore += orbValue * 2;
+                //Add points to the player based on the merge value, and summon a floating text.
+                int points = orbValue * 2;
+                referenceOwnerScript.playerScore += points;
+
+                //Summon a floating text at the merge location. (Old, Replaced with the version below.)
+                //var referenceNewFloatingText = Instantiate(referenceGameManager.GetComponent<GameManager>().referenceFloatingText, new Vector3(collision.transform.position.x + Random.Range(-1.5f, 1.5f), collision.transform.position.y + Random.Range(-1.5f, 1.5f), collision.transform.position.z - 2), Quaternion.identity) as GameObject;
+                //referenceNewFloatingText.GetComponent<TextController>().referenceText.color = GetComponent<Renderer>().material.color;
+                //referenceNewFloatingText.GetComponent<TextController>().referenceText.SetText("+" + points);
+                //referenceNewFloatingText.transform.localScale = new Vector3(1 + (points * 0.25f), 1 + (points * 0.25f),1);
+
+                //Summon a floating text at the player's score location.
+                var referenceNewFloatingText = Instantiate(referenceGameManager.GetComponent<GameManager>().referenceFloatingText, new Vector3(referenceOwnerScript.playerUIPosX + Random.Range(-0.7f, 0.7f), referenceOwnerScript.playerUIPosY + Random.Range(0.4f, 0.6f), -2), Quaternion.identity) as GameObject;
+                referenceNewFloatingText.GetComponent<TextController>().referenceText.color = GetComponent<Renderer>().material.color;
+                referenceNewFloatingText.GetComponent<TextController>().referenceText.SetText("+" + points);
+                referenceNewFloatingText.GetComponent<TextController>().floatSpeed = 0.002f;
+                referenceNewFloatingText.transform.localScale = new Vector3(1.5f + (points * 0.05f), 1.5f + (points * 0.05f), 1);
 
                 //Carry over this orbs's values onto the next object.
                 ItemController referenceItemControlScript = referenceNewItem.GetComponent<ItemController>();
@@ -210,6 +229,7 @@ public class ItemController : MonoBehaviour
 
                 //Set the orb's new colour/style and owner ID.
                 referenceCollisionScript.itemOwner = this.itemOwner;
+                referenceCollisionScript.referenceOwnerScript = this.referenceOwnerScript;
                 collision.gameObject.GetComponent<SpriteRenderer>().sprite = this.paintStyle;
                 collision.gameObject.GetComponent<Renderer>().material.SetColor("_Color", this.GetComponent<Renderer>().material.color);
             }
