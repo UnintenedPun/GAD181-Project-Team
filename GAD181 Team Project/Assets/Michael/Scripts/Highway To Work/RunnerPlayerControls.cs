@@ -41,6 +41,16 @@ public class RunnerPlayerControls : MonoBehaviour
                 }
                 animator.SetFloat("JumpVelocity", rb.velocity.y);
             }
+
+            if(controller.TimeRemaining == 20)
+            {
+                controller.ScrollSpeed -= 1;
+            }
+
+            if (controller.TimeRemaining == 10)
+            {
+                controller.ScrollSpeed -= 1;
+            }
         }
     }
 

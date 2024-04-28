@@ -8,11 +8,14 @@ TagManager:
   - Junk
   - Powerup
   - PlayerUI
+  - Bird
+  - Floor
+  - Hurdle
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 
