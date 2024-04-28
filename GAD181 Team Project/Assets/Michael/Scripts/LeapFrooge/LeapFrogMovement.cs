@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEditor.FilePathAttribute;
-using static UnityEditor.PlayerSettings;
 
 public class LeapFrogMovement : MonoBehaviour
 {
