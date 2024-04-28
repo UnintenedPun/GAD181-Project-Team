@@ -3663,6 +3663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8665dba202849474faa6da2e081cfc87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb2d: {fileID: 778516458}
   controllsEnabled: 1
   moveForward: 1
   hitTimes: 3
@@ -3688,7 +3689,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1.2694937
+  m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
