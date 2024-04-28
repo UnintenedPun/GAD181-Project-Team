@@ -8,7 +8,7 @@ public class LeapFrogMovement : MonoBehaviour
     private Vector2 Xaxis;
 
     [Header("References")]
-    private Rigidbody2D rb2d;
+    public Rigidbody2D rb2d;
     private Transform myPos;
     private LeapFroogManager controller;
     public bool controllsEnabled = true;
@@ -34,7 +34,6 @@ public class LeapFrogMovement : MonoBehaviour
         myAnimator = GetComponent<Animator>();
         myPos = GetComponent<Transform>();
         controller = FindFirstObjectByType<LeapFroogManager>();
-        rb2d = GetComponent<Rigidbody2D>();
         Yaxis = new Vector2(0, 1);
         Xaxis = new Vector2(1, 0);
 
@@ -119,36 +118,26 @@ public class LeapFrogMovement : MonoBehaviour
         rb2d.MovePosition(rb2d.position - Yaxis);
     }
 
-    public void ResetVelocity()
-    {
-        rb2d.velocity = Vector3.zero;
-        Vector3Int pos = background.LocalToCell(myPos.position);
-
-        myPos.position = background.LocalToCell(pos);
-    }
-
     private bool TileCheck(Transform pos, Tilemap checkMap)
     {
         
         Vector3Int newPos = checkMap.LocalToCell(pos.position);
         TileBase location = checkMap.GetTile(newPos);
 
-        Debug.Log(location);
-
         if (checkMap.isActiveAndEnabled == false)
         {
-            Debug.Log("nulling");
+
             location = null;
         }
 
         if (location != null)
         {
-            Debug.Log("true");
+
             return true;
         }
         else
         {
-            Debug.Log("false");
+
             return false;
         }
     }
@@ -168,7 +157,6 @@ public class LeapFrogMovement : MonoBehaviour
 
     private void CheckGroundCheck()
     {
-        Debug.Log("Checking pos" + GroundCheck);
         if (TileCheck(GroundCheck, Walls[1]) || TileCheck(GroundCheck, Walls[0]) || TileCheck(GroundCheck, PlayBarrier))
         {
             moveForward = false;

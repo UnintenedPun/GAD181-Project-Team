@@ -39,33 +39,17 @@ public class BirdScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.tag == "Player")
+        if(collision.collider.CompareTag("Player"))
         {
-            LeapFrogMovement sub =  collision.gameObject.GetComponent<LeapFrogMovement>();
+            Debug.Log("hit");
+            LeapFrogMovement sub = collision.gameObject.GetComponent<LeapFrogMovement>();
             if(sub != null)
             {
-                if(sub.hitTimes > 0)
-                {
-                    sub.hitTimes--;
-                }
-                else
-                {
+
                     sub.birdThatHasCapturedMe = this.gameObject;
                     sub.isCaptured = true;
-                }
-                
-            }
-        }
-    }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.collider.tag == "Player")
-        {
-            LeapFrogMovement sub = collision.gameObject.GetComponent<LeapFrogMovement>();
-            if (sub != null)
-            {
-                sub.ResetVelocity();
+      
             }
         }
     }
